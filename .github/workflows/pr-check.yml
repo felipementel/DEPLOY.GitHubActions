@@ -10,11 +10,6 @@ on:
       - '**.md'
       - 'docs/**'
       - 'src/**/_requests/**'
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  security-events: write
 
 jobs:
   call-pr-check-workflow:
@@ -22,7 +17,7 @@ jobs:
     uses: felipementel/reusable-workflows/.github/workflows/pr-check.yml@feature/spectral
     permissions:
       contents: read
-      pull-requests: write
+      security-events: write
     with:
       environment: 'DEV'
       git-leaks: true
