@@ -1,0 +1,33 @@
+name: 'PR Caller: Validate PR'
+run-name: "PR Check by ${{ github.actor }}"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'src/**/_requests/**'
+
+jobs:
+  call-pr-check-workflow:
+    name: Call PR Check Reusable Workflow
+    uses: felipementel/reusable-workflows/.github/workflows/pr-check.yml@feature/spectral
+    with:
+      environment: 'DEV'
+      git-leaks: true
+      sonar-qube: true
+      unit-tests: true
+      snyk: true
+      msg-canal-deploy: 'PR Check - Canal DEPLOY'
+      dotnetVersion: ${{ vars.DOTNETVERSION || '9.x' }}
+      projectBaseDir: ${{ vars.PROJECTBASEDIR || './src' }}
+      solutionFileName: ${{ vars.SOLUTIONFILENAME }}
+      mainProject: ${{ vars.MAINPROJECT }}
+      reportTitle: ${{ vars.REPORTTITLE || 'PR Check Report' }}
+      sonarExclusions: ${{ vars.SONAREXCLUSIONS || '' }}
+      imageName: ${{ vars.IMAGENAME }}
+    secrets:
+      inherit
