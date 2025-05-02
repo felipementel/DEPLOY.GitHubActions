@@ -33,5 +33,6 @@ jobs:
       reportTitle: ${{ vars.REPORTTITLE || 'PR Check Report' }}
       sonarExclusions: ${{ vars.SONAREXCLUSIONS || '' }}
       imageName: ${{ vars.IMAGENAME }}
+      openAPIFolder: "open-api"
     secrets:
       inherit
